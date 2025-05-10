@@ -1,0 +1,34 @@
+<html>
+    <body style="margin:0; padding:0; background-color:white; width:100%; height:100%;">
+        <img id = "myImage" style="width:100%; height:100%; object-fit:contain; display: block;">
+        <audio id="myAudio">
+            <source src="screenimage/Ex_imgs/Scenario1.mp3" type="audio/mpeg"></audio>
+          `
+        </audio>
+    </body>
+    <script>
+        const timestamp = new Date().getTime();
+
+        document.getElementById('myImage').src = `screenimage/Ex_imgs/Double_SC1.png?ts=${timestamp}`;
+
+        const audio = document.getElementById('myAudio');
+        audio.play();
+
+        setInterval(()=>{
+           if (typeof DRDoubleSDK !== 'undefined'){
+            DRDoubleSDK.resetWatchdog();
+           } else{
+            console.log("DRDoubleSDK is not availble yet");
+           }
+        },2000);  
+
+        
+
+        setTimeout(() => {
+        document.getElementById('myImage').style.display = 'none';
+        }, 5000);
+
+    
+        
+    </script>
+</html>

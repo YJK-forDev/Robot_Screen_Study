@@ -1,0 +1,18 @@
+<html>
+    <body style="margin:0; padding:0; background-color:white; width:100%; height:100%;">
+        <img src="screenimage/sibal.png" style="width:100%; height:100%; object-fit:contain; display: block;">
+    </body>
+    <script>
+        setInterval(()=>{
+           if (typeof DRDoubleSDK !== 'undefined'){
+            DRDoubleSDK.resetWatchdog();
+           } else{
+            console.log("DRDoubleSDK is not availble yet");
+           }
+        },2000);  
+
+        
+    </script>
+
+</html>
+

@@ -1,0 +1,40 @@
+
+Participant Number : PIlot2
+Test Count : 9
+Scenario : Scenario1
+Timing : During-Speech
+Visual Type : Image
+Visual Content : Verbal related object
+Amount : One
+Synchronocity : One
+***************************************
+
+Participant Number : PIlot2
+Test Count : 2
+Scenario : Scenario2
+Timing : Before-Speech
+Visual Type : Image
+Visual Content : Verbal related object
+Amount : Multiple
+Synchronocity : Multiple
+***************************************
+
+Participant Number : PIlot2
+Test Count : 2
+Scenario : Scenario3
+Timing : Before-Speech
+Visual Type : Image
+Visual Content : Verbal related object
+Amount : Multiple
+Synchronocity : One
+***************************************
+
+Participant Number : PIlot2
+Test Count : 0
+Scenario : Scenario3
+Timing : Before-Speech
+Visual Type : Image
+Visual Content : Verbal related object
+Amount : Multiple
+Synchronocity : One
+***************************************

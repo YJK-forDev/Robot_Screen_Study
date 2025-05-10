@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>
+            Robot design space preference investigation
+        </title>
+        <style>
+            body{
+                font-family: 'Courier New', monospace;
+            }
+            .Dimension-box{
+                border:2px solid rgb(255, 255, 255);
+                padding: 10px;
+                margin-bottom: 20px;
+                border-radius: 5px;
+                width:50%;
+                background-color: transparent;
+                box-shadow: 3px 3px 10px rgba(0,0,0,0.3);
+                display: flex;
+                flex-direction: column;
+                text-align:center;
+            }
+
+            .Container-box{
+                display:flex;
+                flex-direction:column;
+                align-items: center;
+                justify-content: flex-start;
+            }
+
+            .DimensionName-box{
+                background-color:#fff1d7; 
+                border-radius: 5px;
+                text-align: center;
+            }
+
+            .radio-group{
+                display:flex;
+                justify-content: space-between;
+                width:100%;
+            }
+
+            .long-slider{
+                width:800px;
+            }
+
+            .Container-box + .Container-box {
+                margin-top: 40px;
+            }
+
+            p{
+                font-weight:bold;
+            }
+            .save{
+                position:absolute;
+                right:2%;
+                top:120%;
+                border-radius: 0px;
+                background-color: rgb(70, 3, 3);
+                height: 120px;
+                width : 500px;
+                padding: 5px;
+            }
+            .tooltip-box{
+                position: fixed;
+                top: 12%;
+                left:53%;
+                margin-left: 20px;
+                width:43%;
+                height:10%;
+                background-color: rgb(255, 255, 255);
+                border: 1px solid #ccc;
+                color: black;
+                opacity: 0;
+                box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+                border-radius: 5px;
+
+                text-align: center;  
+                display:flex !important;
+                justify-content: center;
+                align-items: center;
+                box-sizing: border-box;              
+            }
+
+            .tooltip-box.visible{
+                opacity:1;
+            }
+
+            #preview-area {
+                position: fixed;
+                top: 40%;
+                left: 57%;
+                width: 50%;
+                height: 100px;
+                
+                border-radius: 5px;
+                width: 40% !important;
+                transform: scale(0.5);
+                
+            }
+
+            #preview-img{
+                position: fixed;
+                top: -30%;
+                left: -45%;
+                width: 180%;
+                height: 800px;
+                border: 2px solid gray;
+                border-radius: 5px;
+                display:block;
+            }
+
+
+        </style>
+    </head>
+    <body>
+        <form method="POST" action="/button_click">
+            <div style="background-color:rgba(255, 255, 255, 0.801); height: 70px; display: flex; flex-direction: column; align-items: center; margin-bottom: 30px;">
+                <h1 style="text-align: center;">Design preferences on pepper robot screen</h3>
+            </div>
+
+            <div class="Dimension-box">
+                <div class="DimensionName-box">
+                    <h3>Content</h1>
+                </div>
+
+                <div class="Container-box">
+                    <h4>What kind of information would you prefer to be shown?</h4>
+                    <div class="radio-group">
+                        
+                        <input type="radio" id="Emotion" name="VisualContent" value="Emotion" checked>
+                        <label for=""option1" onmouseover="showTooltip('Pepper will show its emotion on its screen.')" onmouseout="hideTooltip()">Robot's Emotion</label><br>
+
+                        <input type="radio" id="Verbal related object" name="VisualContent" value="Verbal related object">
+                        <label for=""option1" onmouseover="showTooltip('Pepper will show verbal related object(s) on its screen.')" onmouseout="hideTooltip()">Visual referent</label><br>
+                    </div>
+                </div>
+
+                <div class="Container-box">
+                    <h4>What form of information would you prefer to be shown?</h4>
+                    <div class="radio-group">
+                        
+                        <input type="radio" id="Text" name="VisualType" value="Text" checked>
+                        <label for=""option1" onmouseover="showTooltip('Pepper will show text content on its screen.')" onmouseout="hideTooltip()">Text</label><br>
+
+                        <input type="radio" id="Image" name="VisualType" value="Image">
+                        <label for=""option1" onmouseover="showTooltip('Pepper will show visual object on its screen.')" onmouseout="hideTooltip()">Image</label><br>
+
+                    </div>
+                </div>
+
+            </div>
+
+            
+            <div class="Dimension-box">
+                <div class="DimensionName-box">
+                    <h3>Timing</h1>
+                </div>
+
+                <div class="Container-box">
+                    <h4>When would you prefer the information to start being shown?</h4>
+                    
+                    <img src="{{url_for('static', filename='robot_saying.png')}}" width="100px">
+                    <input type="range" name="choiceSlider" class="long-slider" min="1" max="3" value="1" step="1">
+                    <div style="display: flex; justify-content: space-between; width:800px; margin-top:4px;">
+                        <span>Before-Speech</span>
+                        <span>During-Speech</span>
+                        <span>After-Speech</span>
+                    </div>
+                    
+                    <!---
+                    <div class="radio-group">
+                        
+                        <input type="radio" id="Before-Speech" name="Timing" value="Before-Speech" checked>
+                        <label for=""option1" onmouseover="showTooltip('Pepper will show content on its screen before it starts to speak.')" onmouseout="hideTooltip()">Before-Speech</label><br>
+
+                        <input type="radio" id="During-Speech" name="Timing" value="During-Speech">
+                        <label for=""option1" onmouseover="showTooltip('Pepper will show content on its screen during it speaks.')" onmouseout="hideTooltip()">During-Speech</label><br>
+
+                        <input type="radio" id="After-Speech" name="Timing" value="After-Speech">
+                        <label for=""option1" onmouseover="showTooltip('Pepper will show content on its screen after it speaks.')" onmouseout="hideTooltip()">After-Speech</label><br>
+                    </div>
+                    --->
+                </div>
+            </div>
+
+            
+
+            <div class="Dimension-box">
+                <div class="DimensionName-box">
+                    <h3>Layout</h1>
+                </div>
+                
+                <div class="Container-box">
+                    <h4>How much information would you prefer to be shown in a single sentence?</h4>
+                    <div class="radio-group">
+                        
+                        <input type="radio" id="Amount-One" name="Amount" value="One" checked>
+                        <label for=""option1" onmouseover="showTooltip('Pepper will show one content per each sentence on its screen.')" onmouseout="hideTooltip()">One piece of information in total</label><br>
+
+                        <input type="radio" id="Amount-Multiple" name="Amount" value="Multiple">
+                        <label for=""option1" onmouseover="showTooltip('Pepper will show multiple contents per each sentence on its screen.')" onmouseout="hideTooltip()">Multiple piece of information in total</label><br>
+                    </div>
+                </div>
+
+                
+                <div class="Container-box">
+                    <h4>How much information would you prefer to be shown at once in a single sentence?</h4>
+                    <div class="radio-group">
+                        
+                        <input type="radio" id="Synchronocity-One" name="Synchronocity" value="One" checked>
+                        <label for=""option1" onmouseover="showTooltip('Pepper will show one content on its screen at once.')" onmouseout="hideTooltip()">One thing at a time</label><br>
+
+                        <input type="radio" id="Synchronocity-Multiple" name="Synchronocity" value="Multiple">
+                        <label for=""option1" onmouseover="showTooltip('Pepper will show multiple contents on its screen at once.')" onmouseout="hideTooltip()">Multiple things at a time</label><br>
+                    </div>
+                </div>
+            </div>
+
+            <div id="preview-area">
+                <iframe id="preview-img"></iframe>
+            </div>
+            
+           
+
+            <button value="test" name="button" type="submit" 
+                    style="
+                    font-weight: bold;
+                    background-color: #fff1d7;
+                    border-color: rgb(255, 255, 255);
+                    border-radius: 5px; 
+                    width:150px; 
+                    height:70px; 
+                    position:absolute; 
+                    top:30px;
+                    right:50px;
+                    font-size: 2rem;">
+                    Test!
+            </button>
+            
+
+            <div class="save">
+                <form action="/button_click" method="POST">
+                    <p style="color: white;"> Do not touch. Restricted to research team. </p>
+                    
+                    <input type="radio" id="Scenario1" name="Scenario" value="Scenario1" checked>
+                    <small style="color: white;"><b>Scenario1</b></small> 
+
+                    <input type="radio" id="Scenario2" name="Scenario" value="Scenario2">
+                    <small style="color: white;"><b>Scenario2</b></small>
+
+                    <input type="radio" id="Scenario3" name="Scenario" value="Scenario3">
+                    <small style="color: white;"><b>Scenario3</b></small><br>
+                
+                    <input type="text" name="textfield" placeholder="participant id">
+                    <button value="save" name="button" type="submit"> Data Logging </button>
+                </form>
+                
+            </div>
+            
+
+        </form>
+
+        <button id="preview-btn" value="preview" name="button" type="button" 
+                    style="
+                    font-weight: bold;
+                    background-color: #fff1d7;
+                    border-color: rgb(255, 255, 255);
+                    border-radius: 5px; 
+                    width:150px; 
+                    height:70px; 
+                    position:absolute; 
+                    top:30px;
+                    right:220px;
+                    font-size: 2rem;">
+                    Preview
+            </button>
+
+        <div id="tooltip-box" class="tooltip-box"></div>
+        <script>
+            function showTooltip(text){
+                let tooltip=document.getElementById("tooltip-box");
+                tooltip.innerText = text;
+                
+                tooltip.classList.add('visible');
+                tooltip.style.display = "block";
+            }
+    
+            function hideTooltip(){
+                let tooltip = document.getElementById("tooltip-box");
+                tooltip.style.display = "none";
+                tooltip.classList.remove('visible');
+            }
+
+
+
+            function showPreviewImage(){
+                console.log("Preview button clicked");
+                const VisualContentValue = document.querySelector('input[name="VisualContent"]:checked').value;
+                const VisualTypeValue = document.querySelector('input[name="VisualType"]:checked').value;
+                
+                const AmountValue = document.querySelector('input[name="Amount"]:checked').value;
+                const SynchronocityValue = document.querySelector('input[name="Synchronocity"]:checked').value;
+                const ScenarioValue = document.querySelector('input[name="Scenario"]:checked').value;
+
+                let imagePath="";
+                let imagePath2="";
+
+                if (ScenarioValue ==="Scenario1") {
+                    if (VisualContentValue === "Emotion" && VisualTypeValue === "Image") {
+                        if (AmountValue === "One" && SynchronocityValue === "One") {
+                            imagePath = "Scenario/SC1_EVOO.html";
+                        } else if (AmountValue === "Multiple" && SynchronocityValue === "One") {
+                            imagePath = "Scenario/SC1_EVMO_1.html";
+                            imagePath2 = "Scenario/SC1_EVMO_2.html";
+                        } else if (AmountValue === "Multiple" && SynchronocityValue === "Multiple") {
+                            imagePath = "Scenario/SC1_EVMM.html";
+                        }
+                    }
+                    else if (VisualContentValue === "Emotion" && VisualTypeValue === "Text") {
+                        if (AmountValue === "One" && SynchronocityValue === "One") {
+                            imagePath = "Scenario/SC1_ETOO.html";
+                        } else if (AmountValue === "Multiple" && SynchronocityValue === "One") {
+                            imagePath = "Scenario/SC1_ETMO_1.html";
+                            imagePath2 = "Scenario/SC1_ETMO_2.html";
+                        } else if (AmountValue === "Multiple" && SynchronocityValue === "Multiple") {
+                            imagePath = "Scenario/SC1_ETMM.html";
+                        }
+                    }
+                    else if (VisualContentValue === "Verbal related object" && VisualTypeValue === "Image") {
+                        if (AmountValue === "One" && SynchronocityValue === "One") {
+                            imagePath = "Scenario/SC1_VVOO.html";
+                        } else if (AmountValue === "Multiple" && SynchronocityValue === "One") {
+                            imagePath = "Scenario/SC1_VVMO_1.html";
+                            imagePath2 = "Scenario/SC1_VVMO_2.html";
+                        } else if (AmountValue === "Multiple" && SynchronocityValue === "Multiple") {
+                            imagePath = "Scenario/SC1_VVMM.html";
+                        }
+                    }
+                    else if (VisualContentValue === "Verbal related object" && VisualTypeValue === "Text") {
+                        if (AmountValue === "One" && SynchronocityValue === "One") {
+                            imagePath = "Scenario/SC1_VTOO.html";
+                        } else if (AmountValue === "Multiple" && SynchronocityValue === "One") {
+                            imagePath = "Scenario/SC1_VTMO_1.html";
+                            imagePath2 = "Scenario/SC1_VTMO_2.html";
+                        } else if (AmountValue === "Multiple" && SynchronocityValue === "Multiple") {
+                            imagePath = "Scenario/SC1_VTMM.html";
+                        }
+                    }
+                }
+
+                else if (ScenarioValue ==="Scenario2") {
+                    if (VisualContentValue === "Emotion" && VisualTypeValue === "Image") {
+                        if (AmountValue === "One" && SynchronocityValue === "One") {
+                            imagePath = "Scenario/SC2_EVOO.html";
+                        } else if (AmountValue === "Multiple" && SynchronocityValue === "One") {
+                            imagePath = "Scenario/SC2_EVMO_1.html";
+                            imagePath2 = "Scenario/SC2_EVMO_2.html";
+                        } else if (AmountValue === "Multiple" && SynchronocityValue === "Multiple") {
+                            imagePath = "Scenario/SC2_EVMM.html";
+                        }
+                    }
+                    else if (VisualContentValue === "Emotion" && VisualTypeValue === "Text") {
+                        if (AmountValue === "One" && SynchronocityValue === "One") {
+                            imagePath = "Scenario/SC2_ETOO.html";
+                        } else if (AmountValue === "Multiple" && SynchronocityValue === "One") {
+                            imagePath = "Scenario/SC2_ETMO_1.html";
+                            imagePath2 = "Scenario/SC2_ETMO_2.html";
+                        } else if (AmountValue === "Multiple" && SynchronocityValue === "Multiple") {
+                            imagePath = "Scenario/SC2_ETMM.html";
+                        }
+                    }
+                    else if (VisualContentValue === "Verbal related object" && VisualTypeValue === "Image") {
+                        if (AmountValue === "One" && SynchronocityValue === "One") {
+                            imagePath = "Scenario/SC2_VVOO.html";
+                        } else if (AmountValue === "Multiple" && SynchronocityValue === "One") {
+                            imagePath = "Scenario/SC2_VVMO_1.html";
+                            imagePath2 = "Scenario/SC2_VVMO_2.html";
+                        } else if (AmountValue === "Multiple" && SynchronocityValue === "Multiple") {
+                            imagePath = "Scenario/SC2_VVMM.html";
+                        }
+                    }
+                    else if (VisualContentValue === "Verbal related object" && VisualTypeValue === "Text") {
+                        if (AmountValue === "One" && SynchronocityValue === "One") {
+                            imagePath = "Scenario/SC2_VTOO.html";
+                        } else if (AmountValue === "Multiple" && SynchronocityValue === "One") {
+                            imagePath = "Scenario/SC2_VTMO_1.html";
+                            imagePath2 = "Scenario/SC2_VTMO_2.html";
+                        } else if (AmountValue === "Multiple" && SynchronocityValue === "Multiple") {
+                            imagePath = "Scenario/SC2_VTMM.html";
+                        }
+                    }
+                }
+
+                else if (ScenarioValue ==="Scenario3") {
+                    if (VisualContentValue === "Emotion" && VisualTypeValue === "Image") {
+                        if (AmountValue === "One" && SynchronocityValue === "One") {
+                            imagePath = "Scenario/SC3_EVOO.html";
+                        } else if (AmountValue === "Multiple" && SynchronocityValue === "One") {
+                            imagePath = "Scenario/SC3_EVMO_1.html";
+                            imagePath2 = "Scenario/SC3_EVMO_2.html";
+                        } else if (AmountValue === "Multiple" && SynchronocityValue === "Multiple") {
+                            imagePath = "Scenario/SC3_EVMM.html";
+                        }
+                    }
+                    else if (VisualContentValue === "Emotion" && VisualTypeValue === "Text") {
+                        if (AmountValue === "One" && SynchronocityValue === "One") {
+                            imagePath = "Scenario/SC3_ETOO.html";
+                        } else if (AmountValue === "Multiple" && SynchronocityValue === "One") {
+                            imagePath = "Scenario/SC3_ETMO_1.html";
+                            imagePath2 = "Scenario/SC3_ETMO_2.html";
+                        } else if (AmountValue === "Multiple" && SynchronocityValue === "Multiple") {
+                            imagePath = "Scenario/SC3_ETMM.html";
+                        }
+                    }
+                    else if (VisualContentValue === "Verbal related object" && VisualTypeValue === "Image") {
+                        if (AmountValue === "One" && SynchronocityValue === "One") {
+                            imagePath = "Scenario/SC3_VVOO.html";
+                        } else if (AmountValue === "Multiple" && SynchronocityValue === "One") {
+                            imagePath = "Scenario/SC3_VVMO_1.html";
+                            imagePath2 = "Scenario/SC3_VVMO_2.html";
+                        } else if (AmountValue === "Multiple" && SynchronocityValue === "Multiple") {
+                            imagePath = "Scenario/SC3_VVMM.html";
+                        }
+                    }
+                    else if (VisualContentValue === "Verbal related object" && VisualTypeValue === "Text") {
+                        if (AmountValue === "One" && SynchronocityValue === "One") {
+                            imagePath = "Scenario/SC3_VTOO.html";
+                        } else if (AmountValue === "Multiple" && SynchronocityValue === "One") {
+                            imagePath = "Scenario/SC3_VTMO_1.html";
+                            imagePath2 = "Scenario/SC3_VTMO_2.html";
+                        } else if (AmountValue === "Multiple" && SynchronocityValue === "Multiple") {
+                            imagePath = "Scenario/SC3_VTMM.html";
+                        }
+                    }
+                }
+
+
+                
+
+                document.getElementById("preview-img").src = imagePath;
+                if (AmountValue === "Multiple" && SynchronocityValue === "One") {
+                    setTimeout(function(){
+                        document.getElementById("preview-img").src = imagePath2;
+                    }, 1500);
+                }
+                
+                setTimeout(function(){
+                    document.getElementById("preview-img").src = "Scenario/Blank.html";
+                }, 3000);
+                document.getElementById("preview-img").style.display = "block";
+
+                
+            }
+
+            document.addEventListener("DOMContentLoaded", function(){
+                    document.getElementById("preview-btn").addEventListener("click", showPreviewImage);
+                    console.log("WHAT");
+            });
+            
+            const amountOne=document.getElementById("Amount-One");
+            const amountMultiple=document.getElementById("Amount-Multiple");
+            const syncMultiple=document.getElementById("Synchronocity-Multiple");
+
+            const updateSyncOptions = ()=> {
+                if (amountOne.checked) {
+                    syncMultiple.checked = false;
+                    syncMultiple.disabled = true;
+                } else {
+                    syncMultiple.disabled = false;
+                }
+            };
+
+            amountOne.addEventListener("change", updateSyncOptions);
+            amountMultiple.addEventListener("change", updateSyncOptions);
+
+            updateSyncOptions();
+            
+            
+        </script>
+    </body>
+    
+
+</html>

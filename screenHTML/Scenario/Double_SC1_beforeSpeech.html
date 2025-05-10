@@ -1,0 +1,54 @@
+<html>
+  <body style="margin:0; padding:0; background-color:white; width:100%; height:100%;">
+    <img id="myImage" style="width:100%; height:100%; object-fit:contain; display: none;">
+    <audio id="myAudio">
+      <source src="screenimage/Ex_imgs/Scenario1.mp3" type="audio/mpeg">
+    </audio>
+  </body>
+  <script>
+    // Watchdog 유지
+    setInterval(() => {
+      if (typeof DRDoubleSDK !== 'undefined') {
+        DRDoubleSDK.resetWatchdog();
+      } else {
+        console.log("DRDoubleSDK is not available yet");
+      }
+    }, 2000);
+
+    window.onload = () => {
+      const audio = document.getElementById('myAudio');
+      const img = document.getElementById('myImage');
+      const timestamp = new Date().getTime();
+      const imgPath = `screenimage/Ex_imgs/Double_SC1.png?ts=${timestamp}`;
+
+      // 이미지 객체로 preload
+      const preload = new Image();
+      preload.src = imgPath;
+
+      preload.onload = () => {
+        img.src = imgPath;
+        img.style.display = 'block';
+
+        // 다음 렌더링 프레임에 오디오 재생 예약 (화면에 뜬 다음)
+        requestAnimationFrame(() => {
+          setTimeout(() => {
+            audio.pause();
+            audio.currentTime = 0;
+            audio.play().catch(e => console.log("Audio play error:", e));
+          }, 4600);
+        });
+
+        // 이미지는 1.9초 후 사라짐
+        setTimeout(() => {
+          img.style.display = 'none';
+        }, 5100);
+      };
+
+      preload.onerror = () => {
+        console.error("이미지를 불러오지 못했습니다:", imgPath);
+      };
+    };
+  </script>
+</html>
+
+
